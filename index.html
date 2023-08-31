@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Add custom styles for the Matrix effect */
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: black; /* Set the background color to black */
+      }
+
+      .matrix-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        font-family: "Courier New", monospace;
+        color: #00ff00;
+        pointer-events: none;
+        z-index: 1; /* Ensure the letters are on top of the background */
+      }
+
+      .matrix-letter {
+        display: inline-block;
+        width: 20px; /* Adjust the letter width as needed */
+        height: 20px; /* Adjust the letter height as needed */
+        opacity: 0.5;
+        animation: matrixFall 4s linear infinite;
+      }
+
+      @keyframes matrixFall {
+        0% {
+          transform: translateY(0);
+          opacity: 0.5;
+        }
+        100% {
+          transform: translateY(100vh);
+          opacity: 0.1;
+        }
+      }
+    </style>
+    <title>Rodrigo Trindade - Links</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <a href="https://github.com/RoTrindade">
+          <img
+            src="https://github.com/ThiagodePaulaSouza.png"
+            alt="avatar logo"
+          />
+        </a>
+        <h1>
+          <a href="https://www.instagram.com/rodrigotrindade"
+            >@rodrigotrindade</a
+          >
+        </h1>
+      </header>
+      <ul>
+        <a href="https://github.com/ThiagodePaulaSouza">
+          <li>
+            <img src="./images/github.svg" alt="github logo" width="20" />
+            GitHub
+          </li>
+        </a>
+        <a href="https://www.linkedin.com/in/rodrigotrindade">
+          <li>
+            <img
+              src="./images/linkedin.svg"
+              alt="linkedin logo"
+              width="20"
+            />LinkedIn
+          </li>
+        </a>
+        <a href="https://www.youtube.com/@Rodrigo.Trindade">
+          <li>
+            <img
+              src="./images/youtube.svg"
+              alt="youtube logo"
+              width="20"
+            />Youtube
+          </li>
+        </a>
+        <a href="https://www.instagram.com/rodrigotrindade">
+          <li>
+            <img
+              src="./images/instagram.svg"
+              alt="instagram logo"
+              width="20"
+            />Instagram
+          </li>
+        </a>
+        <a href="https://x.com/rodrtrindade">
+          <li>
+            <img
+              src="./images/twitter.svg"
+              alt="twitter logo"
+              width="20"
+            />Twitter
+          </li>
+        </a>
+      </ul>
+    </main>
+    <div class="matrix-container"></div>
+    <script>
+        const matrixContainer = document.querySelector(".matrix-container");
+
+const characters = "010001001001000100110010010";
+const matrixRows = 80;
+const matrixColumns = 20;
+const columnWidth = 20; // Width of each column in pixels
+const fallingSpeed = 50; // Falling speed in milliseconds
+
+// Create an array to keep track of the positions of the characters in each column
+const columnPositions = new Array(matrixColumns).fill(0);
+
+function createMatrixLetter(columnIndex) {
+  const matrixLetter = document.createElement("span");
+  matrixLetter.className = "matrix-letter";
+  matrixLetter.style.left = columnIndex * columnWidth + "px";
+  matrixLetter.textContent = characters[Math.floor(Math.random() * characters.length)];
+  matrixContainer.appendChild(matrixLetter);
+
+  return matrixLetter;
+}
+
+function updateMatrixLetterPosition(matrixLetter, columnIndex) {
+  matrixLetter.style.top = columnPositions[columnIndex] + "px";
+  matrixLetter.textContent = characters[Math.floor(Math.random() * characters.length)];
+}
+
+function animateFalling() {
+  for (let columnIndex = 0; columnIndex < matrixColumns; columnIndex++) {
+    const matrixLetter = createMatrixLetter(columnIndex);
+    columnPositions[columnIndex] += 20;
+
+    if (columnPositions[columnIndex] >= matrixRows * 20) {
+      columnPositions[columnIndex] = 0;
+    }
+
+    updateMatrixLetterPosition(matrixLetter, columnIndex);
+  }
+
+  setTimeout(animateFalling, fallingSpeed);
+}
+
+// Start the animation
+animateFalling();
+
+    </script>
+  </body>
+</html>
